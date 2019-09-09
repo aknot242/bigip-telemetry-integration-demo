@@ -15,13 +15,11 @@
     status_code:
       - 200
       - 404
-  tags: index
   register: index_check
 
 - debug:
     var: index_check
     verbosity: 2
-  tags: index
 
 - name: Index settings
   uri:
@@ -30,8 +28,7 @@
     body: "{{ lookup('file','./files/elasticsearch/index-settings.json') }}"
     status_code: 200
     body_format: json
-    when: index_check['status'] == 404
-  tags: index
+  when: index_check.status == 404
 
 - name: Mappings settings
   uri:
