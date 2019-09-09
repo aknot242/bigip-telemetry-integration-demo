@@ -8,6 +8,16 @@
   retries: 10
   delay: 5
 
+- name: Check if index exists
+  uri:
+    url: "{{ elasticsearch_base_url }}/{{ elasticsearch_index }}"
+    method: GET
+  register: index_check
+
+- debug:
+    var: index_check
+    verbosity: 2
+
 - name: Index settings
   uri:
     url: "{{ elasticsearch_base_url }}/{{ elasticsearch_index }}"
@@ -15,7 +25,7 @@
     body: "{{ lookup('file','./files/elasticsearch/index-settings.json') }}"
     status_code: 200
     body_format: json
-
+    when: index_check.status == 404
 
 - name: Mappings settings
   uri:

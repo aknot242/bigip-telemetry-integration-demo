@@ -14,7 +14,7 @@
 - F5 Super NetOps Docker container https://hub.docker.com/r/f5usecases/f5-rs-container/
 
 ## Prerequisites
-- Ansible must be installed
+- Ansible must be installed - https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
 - Docker must be installed
 - Your Docker container must be able to connect to a specified BIG-IP over TCP port 443
 - The BIG-IP must already be configured with a management address, and must already have a strong password set if using BIG-IP v14+
