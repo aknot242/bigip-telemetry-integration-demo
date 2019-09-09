@@ -30,7 +30,7 @@
     body: "{{ lookup('file','./files/elasticsearch/index-settings.json') }}"
     status_code: 200
     body_format: json
-    when: index_check.status == 404
+    when: index_check['status'] == 404
   tags: index
 
 - name: Mappings settings
