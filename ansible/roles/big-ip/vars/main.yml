@@ -1,0 +1,7 @@
+#role variables
+
+as3_file: "as3.rpm"
+as3_file_sha256: "{{as3_file}}.sha256"
+
+do_file: "do.rpm"
+do_file_sha256: "{{do_file}}.sha256"

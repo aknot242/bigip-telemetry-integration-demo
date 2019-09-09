@@ -1,0 +1,42 @@
+version: '3'
+services:
+  grafana:
+    image: "grafana/grafana"
+    depends_on:
+      - graphite
+    ports:
+      - "3030:3000"
+    env_file:
+      - grafana-vars.env
+
+  graphite:
+    image: "graphiteapp/graphite-statsd"
+    ports:
+      - "80:80"
+      - "2003-2004:2003-2004"
+      - "2023-2024:2023-2024"
+      - "8125:8125/udp"
+      - "8126:8126"
+      - "8080:8080"
+
+  elasticsearch:
+    image: "elasticsearch:7.3.1"
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - discovery.type=single-node
+
+  redis:
+    image: "redis"
+    expose:
+      - 6379
+
+  bigip_customipi_feed:
+    image: "aknot242/bigip-custom-ipi-feed"
+    ports:
+      - "3200:3200"
+    environment:
+      - REDIS_URL=redis://redis
+      - NODE_ENV=development
+      - PORT=3200

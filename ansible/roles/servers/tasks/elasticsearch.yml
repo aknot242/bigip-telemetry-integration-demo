@@ -1,0 +1,27 @@
+---
+- name: "Wait for grafana to come up"
+  uri:
+    url: "{{ elasticsearch_base_url }}/"
+    status_code: 200
+  register: result
+  until: result.status == 200
+  retries: 10
+  delay: 5
+
+- name: Index settings
+  uri:
+    url: "{{ elasticsearch_base_url }}/{{ elasticsearch_index }}"
+    method: PUT
+    body: "{{ lookup('file','./files/elasticsearch/index-settings.json') }}"
+    status_code: 200
+    body_format: json
+
+
+- name: Mappings settings
+  uri:
+    url: "{{ elasticsearch_base_url }}/{{ elasticsearch_index }}/_mapping"
+    method: PUT
+    body: "{{ lookup('file','./files/elasticsearch/mappings-settings.json') }}"
+    status_code: 200
+    body_format: json
+    

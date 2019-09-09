@@ -1,0 +1,69 @@
+---
+- name: Get latest AS3 and checksum file download urls
+  uri:
+    url: https://api.github.com/repos/F5Networks/f5-appsvcs-extension/releases/latest
+    return_content: yes
+    status_code: 200
+  register: as3_github_releases
+- set_fact:
+      # weird workaround below: https://github.com/ansible/ansible/issues/27299
+      as3_latest_release_url: "{{ as3_github_releases.json | to_json | from_json | json_query('assets[?ends_with(name, `.rpm`)] | [0] | browser_download_url') }}"
+      as3_latest_release_checksum_url: "{{ as3_github_releases.json | to_json | from_json | json_query('assets[?ends_with(name, `.sha256`)] | [0] | browser_download_url') }}"
+
+- name: Download AS3 checksum file (sha256)
+  get_url:
+    url: "{{ as3_latest_release_checksum_url }}"
+    dest: "./{{ as3_file_sha256 }}"
+    force: yes
+
+- name: Set AS3 checksum var
+  set_fact:
+    as3_checksum: "{{ lookup('file', './as3.rpm.sha256') | regex_search('^(\\S*)') }}"
+
+- name: Download latest AS3 RPM file with check (sha256)
+  get_url:
+    url: "{{ as3_latest_release_url }}"
+    dest: "./{{ as3_file }}"
+    checksum: "sha256:{{ as3_checksum }}"
+    force: yes
+
+
+- name: Get latest DO and checksum file download urls
+  uri:
+    url: https://api.github.com/repos/F5Networks/f5-declarative-onboarding/releases/latest
+    return_content: yes
+    status_code: 200
+  register: do_github_releases
+- set_fact:
+      # weird workaround below: https://github.com/ansible/ansible/issues/27299
+      do_latest_release_url: "{{ do_github_releases.json | to_json | from_json | json_query('assets[?ends_with(name, `.rpm`)] | [0] | browser_download_url') }}"
+      do_latest_release_checksum_url: "{{ do_github_releases.json | to_json | from_json | json_query('assets[?ends_with(name, `.sha256`)] | [0] | browser_download_url') }}"
+
+- name: Download DO checksum file (sha256)
+  get_url:
+    url: "{{ do_latest_release_checksum_url }}"
+    dest: "./{{ do_file_sha256 }}"
+    force: yes
+
+- name: Set DO checksum var
+  set_fact:
+    do_checksum: "{{ lookup('file', './do.rpm.sha256') | regex_search('^(\\S*)') }}"
+
+- name: Download latest DO RPM file with check (sha256)
+  get_url:
+    url: "{{ do_latest_release_url }}"
+    dest: "./{{ do_file }}"
+    checksum: "sha256:{{ do_checksum }}"
+    force: yes
+
+
+# - name: Add an iAppLX Package for Application Services 3
+#   bigip_iapplx_package:
+#     package: "{{ AS3package }}"
+#     password: "{{BIGIPadminPassword}}"
+#     server: "{{instanceName}}-{{resource_group_name}}.{{location}}.cloudapp.azure.com"
+#     state: present
+#     user: "{{BIGIPadminUsername}}"
+#     validate_certs: no
+#   delegate_to: localhost
+

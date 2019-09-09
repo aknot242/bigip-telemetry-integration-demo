@@ -1,0 +1,9 @@
+#role variables
+grafana_port: "3030"
+grafana_base_url: "http://localhost:{{grafana_port}}"
+grafana_username: "admin"
+grafana_password: "admin"
+
+elasticsearch_port: "9200"
+elasticsearch_base_url: "http://localhost:{{elasticsearch_port}}"
+elasticsearch_index: "f5telemetryindex"

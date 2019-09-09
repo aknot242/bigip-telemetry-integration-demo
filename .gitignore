@@ -1,0 +1,3 @@
+ansible/roles/as3-bluegreen/files/tmp
+*.rpm
+*.sha256

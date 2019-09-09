@@ -1,0 +1,18 @@
+{
+    "id": 1,
+    "uid": "HlkKcBFZz",
+    "name": "ms-teams",
+    "type": "teams",
+    "isDefault": false,
+    "sendReminder": false,
+    "disableResolveMessage": false,
+    "frequency": "",
+    "created": "2019-08-30T16:00:09Z",
+    "updated": "2019-08-30T16:00:09Z",
+    "settings": {
+        "autoResolve": true,
+        "httpMethod": "POST",
+        "uploadImage": true,
+        "url": "https://outlook.office.com/webhook/c2998aa8-9504-442b-8eff-8ba1fa61e933@dd3dfd2f-6a3b-40d1-9be0-bf8327d81c50/IncomingWebhook/1da9a5139d8d46f69cb5af92e64c7a1c/b29390a3-46e6-47bc-abb0-8eba16f02eed"
+    }
+}
