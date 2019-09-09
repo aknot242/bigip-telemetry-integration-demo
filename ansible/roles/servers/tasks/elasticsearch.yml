@@ -12,6 +12,9 @@
   uri:
     url: "{{ elasticsearch_base_url }}/{{ elasticsearch_index }}"
     method: GET
+    status_code:
+      - 200
+      - 404
   register: index_check
 
 - debug:
