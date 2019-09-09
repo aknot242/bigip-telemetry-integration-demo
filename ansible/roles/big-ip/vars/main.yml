@@ -1,5 +1,9 @@
 #role variables
 
+bigip_mgmt: 
+bigip_username: admin
+bigip_password: password
+
 as3_file: "as3.rpm"
 as3_file_sha256: "{{as3_file}}.sha256"
 
