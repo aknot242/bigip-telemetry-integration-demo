@@ -1,4 +1,13 @@
-# Simple BIG-IP BlueGreen deployment using AS3 and Ansible in a Docker container based on the following implementation https://github.com/aknot242/bigip-blue-green
+# Builds an environment to demonstrate the capabilities of BIG-IP Telemetry Streaming
+## Demonstrates statistics graphing, notifications and attack responses
+
+## Featuring
+- Graphite/StatsD
+- Grafana
+- ElasticSearch
+- Redis
+- NodeJS
+
 
 ## Dependencies
 - Ansible 2.8
