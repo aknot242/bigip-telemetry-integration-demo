@@ -18,7 +18,7 @@
 
 - name: Set TS checksum var
   set_fact:
-    do_checksum: "{{ lookup('file', '{{ tmp_dir }}/{{ ts_file_sha256 }}') | regex_search('^(\\S*)') }}"
+    ts_checksum: "{{ lookup('file', '{{ tmp_dir }}/{{ ts_file_sha256 }}') | regex_search('^(\\S*)') }}"
 
 - name: Download latest TS RPM file with check (sha256)
   get_url:
