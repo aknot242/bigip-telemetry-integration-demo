@@ -1,4 +1,7 @@
 ---
+- name: Create the tmp folder of does not exist
+  file: path={{ tmp_dir }} state=directory mode=0755
+
 - name: Download and Install AS3
   import_tasks: install-as3.yml
 
