@@ -34,6 +34,8 @@
   uri:
     url: "https://{{ bigip_provider.server }}/mgmt/shared/declarative-onboarding"
     status_code: 200
+    headers:
+      X-F5-Auth-Token: "{{bigip_auth_token}}"
     validate_certs: no
   register: result
   until: result.status == 200
