@@ -4,7 +4,7 @@
     "persist": true,
     "declaration": {
         "class": "ADC",
-        "schemaVersion": "3.0.0",
+        "schemaVersion": "3.9.0",
         "id": "{{ app_tenant | lower }}",
         "label": "{{ app_tenant }}",
         "remark": "Juice Shop Web App",
