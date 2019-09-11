@@ -19,18 +19,25 @@
   set_fact:
     bigip_auth_token: "{{bigip_auth_response.json.token.token}}"
 
-
-
-- name: Use Declarative Onboarding to configure BIG-IP
+- name: Use Declarative Onboarding to Async configure BIG-IP
   uri:
     body: "{{ lookup('file','{{ tmp_dir }}/{{ do_declaration_template }}') }}"
     body_format: json
     headers:
       X-F5-Auth-Token: "{{bigip_auth_token}}"
     method: POST
-    status_code: 200
+    status_code: 202
     url: "https://{{ bigip_provider.server }}/mgmt/shared/declarative-onboarding"
     validate_certs: no
+
+- name: "Wait for Declarative Onboarding to finish up"
+  uri:
+    url: "https://{{ bigip_provider.server }}/mgmt/shared/declarative-onboarding"
+    status_code: 200
+  register: result
+  until: result.status == 200
+  retries: 20
+  delay: 10
 
 - name: Deploy common AS3 objects for use by Telemetry Streaming
   bigip_appsvcs_extension:
@@ -60,6 +67,6 @@
     headers:
       X-F5-Auth-Token: "{{bigip_auth_token}}"
     method: POST
-    status_code: 200
+    status_code: 202
     url: "https://{{ bigip_provider.server }}/mgmt/shared/telemetry/declare"
     validate_certs: no
