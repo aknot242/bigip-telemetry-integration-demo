@@ -29,7 +29,7 @@
 
 
 - name: Add an iAppLX Package for Declarative Onboarding
-  bigip_iapplx_package:
+  bigip_lx_package:
     package: "{{ tmp_dir }}/{{ do_file }}"
     provider: "{{ bigip_provider }}"
     state: present
