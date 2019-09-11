@@ -18,22 +18,22 @@
                     "virtualAddresses": [
                         "{{ app_virtual_address }}"
                     ],
-                    "pool": "web_pool"
-                },
-                "profileTrafficLog": {
-                    "bigip": "/Common/Shared/telemetry_traffic_log_profile"
-                },
-                "policyWAF": {
-                    "use": "OWASP_ASM_Policy"
-                },
-                "securityLogProfiles": [
-                    {
-                        "bigip": "/Common/Shared/telemetry_security_log_profile"
+                    "pool": "web_pool",
+                    "profileTrafficLog": {
+                        "bigip": "/Common/Shared/telemetry_traffic_log_profile"
                     },
-                    {
-                        "bigip": "/Common/Log illegal requests"
-                    }
-                ],
+                    "policyWAF": {
+                        "use": "OWASP_ASM_Policy"
+                    },
+                    "securityLogProfiles": [
+                        {
+                            "bigip": "/Common/Shared/telemetry_security_log_profile"
+                        },
+                        {
+                            "bigip": "/Common/Log illegal requests"
+                        }
+                    ]
+                },
                 "web_pool": {
                     "class": "Pool",
                     "monitors": [
