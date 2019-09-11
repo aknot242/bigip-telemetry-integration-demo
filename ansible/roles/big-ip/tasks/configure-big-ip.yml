@@ -47,6 +47,7 @@
     content: "{{ lookup('file', '{{ as3_ts_dependencies_declaration }}') }}"
     state: present
     provider: "{{ bigip_provider }}"
+    validate_certs: no
 
 
 - name: Prepare the AS3 declaration from the template
@@ -57,6 +58,7 @@
     content: "{{ lookup('file', '{{ tmp_dir }}/{{ app_tenant }}.json') }}"
     state: present
     provider: "{{ bigip_provider }}"
+    validate_certs: no
 
 
 - name: Prepare the Telemetry Streaming declaration from the template
