@@ -31,7 +31,6 @@
 - name: Add an iAppLX Package for Telemetry Streaming
   bigip_iapplx_package:
     package: "{{ tmp_dir }}/{{ ts_file }}"
-    provider: {{ bigip_provider }}
+    provider: "{{ bigip_provider }}"
     state: present
     validate_certs: no
-

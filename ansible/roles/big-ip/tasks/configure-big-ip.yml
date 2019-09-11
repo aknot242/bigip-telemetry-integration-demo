@@ -32,12 +32,11 @@
     url: "https://{{ bigip_provider.server }}/mgmt/shared/declarative-onboarding"
     validate_certs: no
 
-
 - name: Deploy common AS3 objects for use by Telemetry Streaming
   bigip_appsvcs_extension:
     content: "{{ lookup('file', '{{ as3_ts_dependencies_declaration }}') }}"
     state: present
-    provider: {{ bigip_provider }}
+    provider: "{{ bigip_provider }}"
 
 
 - name: Prepare the AS3 declaration from the template
@@ -47,7 +46,7 @@
   bigip_appsvcs_extension:
     content: "{{ lookup('file', '{{ tmp_dir }}/{{ app_tenant }}.json') }}"
     state: present
-    provider: {{ bigip_provider }}
+    provider: "{{ bigip_provider }}"
 
 
 - name: Prepare the Telemetry Streaming declaration from the template
