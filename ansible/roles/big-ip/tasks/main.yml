@@ -1,4 +1,12 @@
 ---
-- name: Build BIG-IP
-  import_tasks: big-ip.yml
+- name: Download and Install AS3
+  import_tasks: install-as3.yml
 
+- name: Download and Install DO
+  import_tasks: install-do.yml
+
+- name: Download and Install TS
+  import_tasks: install-ts.yml
+
+- name: Configure BIG-IP
+  import_tasks: configure-big-ip.yml
