@@ -1,20 +1,9 @@
 ---
-
 - name: check that docker is running
   import_tasks: docker-containers.yml
 
-- name: Build Graphite
-  import_tasks: graphite.yml
-
-- name: Build Elasticsearch
+- name: Configure Elasticsearch
   import_tasks: elasticsearch.yml
 
-- name: Build Grafana
+- name: Configure Grafana
   import_tasks: grafana.yml
-
-- name: Build Redis
-  import_tasks: redis.yml
-
-- name: Build bigip-custom-ipi-feed
-  import_tasks: bigip-custom-ipi-feed.yml
-

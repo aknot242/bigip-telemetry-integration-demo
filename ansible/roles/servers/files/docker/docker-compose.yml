@@ -40,3 +40,8 @@ services:
       - REDIS_URL=redis://redis
       - NODE_ENV=development
       - PORT=3200
+
+  juice_shop_app:
+    image: bkimminich/juice-shop
+    ports:
+      - "3300:3000"

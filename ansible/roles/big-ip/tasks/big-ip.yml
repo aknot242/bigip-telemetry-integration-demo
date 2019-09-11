@@ -13,19 +13,20 @@
 - name: Download AS3 checksum file (sha256)
   get_url:
     url: "{{ as3_latest_release_checksum_url }}"
-    dest: "{{ download_dir }}/{{ as3_file_sha256 }}"
+    dest: "{{ tmp_dir }}/{{ as3_file_sha256 }}"
     force: yes
 
 - name: Set AS3 checksum var
   set_fact:
-    as3_checksum: "{{ lookup('file', download_dir + '/as3.rpm.sha256') | regex_search('^(\\S*)') }}"
+    as3_checksum: "{{ lookup('file', '{{ tmp_dir }}/{{ as3_file_sha256 }}') | regex_search('^(\\S*)') }}"
 
 - name: Download latest AS3 RPM file with check (sha256)
   get_url:
     url: "{{ as3_latest_release_url }}"
-    dest: "{{ download_dir }}/{{ as3_file }}"
+    dest: "{{ tmp_dir }}/{{ as3_file }}"
     checksum: "sha256:{{ as3_checksum }}"
     force: yes
+
 
 
 - name: Get latest DO and checksum file download urls
@@ -42,36 +43,140 @@
 - name: Download DO checksum file (sha256)
   get_url:
     url: "{{ do_latest_release_checksum_url }}"
-    dest: "{{ download_dir }}/{{ do_file_sha256 }}"
+    dest: "{{ tmp_dir }}/{{ do_file_sha256 }}"
     force: yes
 
 - name: Set DO checksum var
   set_fact:
-    do_checksum: "{{ lookup('file', './do.rpm.sha256') | regex_search('^(\\S*)') }}"
+    do_checksum: "{{ lookup('file', '{{ tmp_dir }}/{{ do_file_sha256 }}') | regex_search('^(\\S*)') }}"
 
 - name: Download latest DO RPM file with check (sha256)
   get_url:
     url: "{{ do_latest_release_url }}"
-    dest: "{{ download_dir }}/{{ do_file }}"
+    dest: "{{ tmp_dir }}/{{ do_file }}"
     checksum: "sha256:{{ do_checksum }}"
     force: yes
 
 
+
+- name: Get latest TS and checksum file download urls
+  uri:
+    url: https://api.github.com/repos/F5Networks/f5-telemetry-streaming/releases/latest
+    return_content: yes
+    status_code: 200
+  register: ts_github_releases
+- set_fact:
+    # weird workaround below: https://github.com/ansible/ansible/issues/27299
+    ts_latest_release_url: "{{ ts_github_releases.json | to_json | from_json | json_query('assets[?ends_with(name, `.rpm`)] | [0] | browser_download_url') }}"
+    ts_latest_release_checksum_url: "{{ ts_github_releases.json | to_json | from_json | json_query('assets[?ends_with(name, `.sha256`)] | [0] | browser_download_url') }}"
+
+- name: Download TS checksum file (sha256)
+  get_url:
+    url: "{{ ts_latest_release_checksum_url }}"
+    dest: "{{ tmp_dir }}/{{ ts_file_sha256 }}"
+    force: yes
+
+- name: Set TS checksum var
+  set_fact:
+    do_checksum: "{{ lookup('file', '{{ tmp_dir }}/{{ ts_file_sha256 }}') | regex_search('^(\\S*)') }}"
+
+- name: Download latest TS RPM file with check (sha256)
+  get_url:
+    url: "{{ ts_latest_release_url }}"
+    dest: "{{ tmp_dir }}/{{ ts_file }}"
+    checksum: "sha256:{{ ts_checksum }}"
+    force: yes
+
+
+
+##### Install packages #####
+
 - name: Add an iAppLX Package for Application Services 3
   bigip_iapplx_package:
-    package: "{{ download_dir }}/{{ as3_file }}"
-    user: "{{ bigip_username }}"
-    password: "{{ bigip_password }}"
-    server: "{{ bigip_mgmt }}"
+    package: "{{ tmp_dir }}/{{ as3_file }}"
+    provider: {{ bigip_provider }}
+    state: present
+    validate_certs: no
+
+- name: Add an iAppLX Package for Declarative Onboarding
+  bigip_iapplx_package:
+    package: "{{ tmp_dir }}/{{ do_file }}"
+    provider: {{ bigip_provider }}
+    state: present
+    validate_certs: no
+
+- name: Add an iAppLX Package for Telemetry Streaming
+  bigip_iapplx_package:
+    package: "{{ tmp_dir }}/{{ ts_file }}"
+    provider: {{ bigip_provider }}
     state: present
     validate_certs: no
 
 
-- name: Add an iAppLX Package for Telemetry Streaming
-  bigip_iapplx_package:
-    package: "{{ download_dir }}/{{ do_file }}"
-    user: "{{ bigip_username }}"
-    password: "{{ bigip_password }}"
-    server: "{{ bigip_mgmt }}"
+
+
+- name: Prepare the DO declaration from the template
+  template: src="{{ role_path }}/files/{{ do_declaration_template }}" dest="{{ tmp_dir }}/{{ do_declaration_template }}"
+
+- name: Get BIG-IP Authentication Token from BIG-IP
+  uri:
+    body: '{"username":"{{ bigip_provider.user}}","password":"{{ bigip_provider.password}}","loginProviderName":"tmos"}'
+    body_format: json
+    method: POST
+    url: "https://{{ bigip_provider.server }}/mgmt/shared/authn/login"
+    status_code: 200
+    validate_certs: no
+  register: bigip_auth_response
+  retries: 30
+  delay: 5
+  until: "(bigip_auth_response | success) and (bigip_auth_response.status == 200)"
+
+- name: Assign Auth Token to Variable
+  set_fact:
+    bigip_auth_token: "{{bigip_auth_response.json.token.token}}"
+
+
+
+- name: Use Declarative Onboarding to configure BIG-IP
+  uri:
+    body: "{{ lookup('file','{{ tmp_dir }}/{{ do_declaration_template }}') }}"
+    body_format: json
+    headers:
+      X-F5-Auth-Token: "{{bigip_auth_token}}"
+    method: POST
+    status_code: 200
+    url: "https://{{ bigip_provider.server }}/mgmt/shared/declarative-onboarding"
+    validate_certs: no
+
+
+- name: Deploy common AS3 objects for use by Telemetry Streaming
+  bigip_appsvcs_extension:
+    content: "{{ lookup('file', '{{ as3_ts_dependencies_declaration }}') }}"
     state: present
+    provider: {{ bigip_provider }}
+
+
+- name: Prepare the AS3 declaration from the template
+  template: src="{{ role_path }}/files/{{ as3_app_declaration_template }}" dest="{{ tmp_dir }}/{{ app_tenant }}.json"
+
+- name: Deploy an app service configuration
+  bigip_appsvcs_extension:
+    content: "{{ lookup('file', '{{ tmp_dir }}/{{ app_tenant }}.json') }}"
+    state: present
+    provider: {{ bigip_provider }}
+
+
+- name: Prepare the Telemetry Streaming declaration from the template
+  template: src="{{ role_path }}/files/{{ ts_declaration_template }}" dest="{{ tmp_dir }}/{{ ts_declaration_template }}"
+
+
+- name: Use Telemetry Streaming to configure BIG-IP
+  uri:
+    body: "{{ lookup('file','{{ tmp_dir }}/{{ ts_declaration_template }}') }}"
+    body_format: json
+    headers:
+      X-F5-Auth-Token: "{{bigip_auth_token}}"
+    method: POST
+    status_code: 200
+    url: "https://{{ bigip_provider.server }}/mgmt/shared/telemetry/declare"
     validate_certs: no
