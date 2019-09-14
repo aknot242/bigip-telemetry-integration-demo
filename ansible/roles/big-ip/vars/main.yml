@@ -11,16 +11,17 @@ bigip_provider:
   user: admin
   password: admin
 
-bigip_hostname: "bigipA.f5demo.com"
+bigip_domain: "us-west-2.compute.internal"
+bigip_hostname: "ip-{{ inventory_hostname | replace('.', '-')}}.{{ bigip_domain }}"
 bigip_ntp_server: "\"0.pool.ntp.org\", \"1.pool.ntp.org\""
 bigip_ntp_timezone: "America/Los_Angeles"
-bigip_dns_server: "\"8.8.8.8\", \"4.2.2.2\""
-bigip_dns_search: "\"localdomain\", \"f5demo.com\""
+bigip_dns_server: "\"10.1.255.254\""
+bigip_dns_search: "\"{{ bigip_domain }}\""
 bigip_external_self_ip: "10.1.10.241/24"
 bigip_external_float_ip: "10.1.10.240/24"
 bigip_internal_self_ip: "10.1.20.241/24"
 bigip_internal_float_ip: "10.1.20.240/24"
-bigip_default_gateway_ip: "10.1.10.2"
+bigip_default_gateway_ip: "10.1.10.1"
 
 as3_file: "as3.rpm"
 as3_file_sha256: "{{as3_file}}.sha256"

@@ -5,6 +5,7 @@
     return_content: yes
     status_code: 200
   register: as3_github_releases
+  check_mode: no
 - set_fact:
     # weird workaround below: https://github.com/ansible/ansible/issues/27299
     as3_latest_release_url: "{{ as3_github_releases.json | to_json | from_json | json_query('assets[?ends_with(name, `.rpm`)] | [0] | browser_download_url') }}"
@@ -15,6 +16,7 @@
     url: "{{ as3_latest_release_checksum_url }}"
     dest: "{{ tmp_dir }}/{{ as3_file_sha256 }}"
     force: yes
+  check_mode: no
 
 - name: Set AS3 checksum var
   set_fact:
@@ -26,6 +28,7 @@
     dest: "{{ tmp_dir }}/{{ as3_file }}"
     checksum: "sha256:{{ as3_checksum }}"
     force: yes
+  check_mode: no
 
 
 - name: Add an iAppLX Package for Application Services 3
