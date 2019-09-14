@@ -9,7 +9,7 @@
         "myDns": {
             "class": "DNS",
             "nameServers": [
-               {{bigip_dns_server}}
+                {{bigip_dns_server}}
             ],
             "search": [
                 {{bigip_dns_search}}
@@ -18,7 +18,7 @@
         "myNtp": {
             "class": "NTP",
             "servers": [
-               {{bigip_ntp_server}}
+                {{bigip_ntp_server}}
             ],
             "timezone": "{{bigip_ntp_timezone}}"
         },
@@ -55,7 +55,7 @@
             "address": "{{bigip_external_self_ip}}",
             "vlan": "external",
             "allowService": [
-               "tcp:443"
+                "tcp:443"
             ],
             "trafficGroup": "traffic-group-local-only"
         },
@@ -71,7 +71,7 @@
             "address": "{{bigip_external_float_ip}}",
             "vlan": "external",
             "allowService": [
-               "tcp:443"
+                "tcp:443"
             ],
             "trafficGroup": "traffic-group-1"
         },
@@ -81,12 +81,6 @@
             "vlan": "internal",
             "allowService": "default",
             "trafficGroup": "traffic-group-1"
-        },
-        "default_gateway": {
-            "class": "Route",
-            "gw": "{{bigip_default_gateway_ip}}",
-            "network": "default",
-            "mtu": 1500
         },
         "configsync": {
             "class": "ConfigSync",

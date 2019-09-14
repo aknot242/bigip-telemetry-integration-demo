@@ -21,7 +21,6 @@ bigip_external_self_ip: "10.1.10.241/24"
 bigip_external_float_ip: "10.1.10.240/24"
 bigip_internal_self_ip: "10.1.20.241/24"
 bigip_internal_float_ip: "10.1.20.240/24"
-bigip_default_gateway_ip: "10.1.10.1"
 
 as3_file: "as3.rpm"
 as3_file_sha256: "{{as3_file}}.sha256"
