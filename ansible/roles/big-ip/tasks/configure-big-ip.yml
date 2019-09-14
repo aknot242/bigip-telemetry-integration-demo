@@ -30,7 +30,7 @@
     url: "https://{{ bigip_provider.server }}/mgmt/shared/declarative-onboarding"
     validate_certs: no
 
-- name: "Wait for Declarative Onboarding to finish up"
+- name: Wait for Declarative Onboarding to finish up
   uri:
     url: "https://{{ bigip_provider.server }}/mgmt/shared/declarative-onboarding"
     status_code: 200

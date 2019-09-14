@@ -81,10 +81,6 @@
             "vlan": "internal",
             "allowService": "default",
             "trafficGroup": "traffic-group-1"
-        },
-        "configsync": {
-            "class": "ConfigSync",
-            "configsyncIp": "/Common/external-self/address"
         }
     }
 }
