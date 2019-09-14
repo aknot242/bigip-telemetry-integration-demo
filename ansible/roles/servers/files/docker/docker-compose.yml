@@ -2,6 +2,7 @@ version: '3'
 services:
   grafana:
     image: "grafana/grafana"
+    restart: unless-stopped
     depends_on:
       - graphite
     ports:
@@ -11,6 +12,7 @@ services:
 
   graphite:
     image: "graphiteapp/graphite-statsd"
+    restart: unless-stopped
     ports:
       - "80:80"
       - "2003-2004:2003-2004"
@@ -21,6 +23,7 @@ services:
 
   elasticsearch:
     image: "elasticsearch:7.3.1"
+    restart: unless-stopped
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -29,11 +32,13 @@ services:
 
   redis:
     image: "redis"
+    restart: unless-stopped
     expose:
       - 6379
 
   bigip_customipi_feed:
     image: "aknot242/bigip-custom-ipi-feed"
+    restart: unless-stopped
     ports:
       - "3200:3200"
     environment:
@@ -43,5 +48,6 @@ services:
 
   juice_shop_app:
     image: bkimminich/juice-shop
+    restart: unless-stopped
     ports:
       - "3300:3000"

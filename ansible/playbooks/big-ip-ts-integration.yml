@@ -1,7 +1,0 @@
----
-- hosts: localhost
-  roles:
-    - role: '../roles/servers'
-    - role: '../roles/big-ip'
-  vars_files:
-    - ../vars/main-variables.yml
