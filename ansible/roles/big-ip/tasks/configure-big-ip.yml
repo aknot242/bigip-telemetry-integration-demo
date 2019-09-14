@@ -48,6 +48,7 @@
     state: present
     provider: "{{ bigip_provider }}"
     validate_certs: no
+  delegate_to: localhost
 
 
 - name: Prepare the AS3 declaration from the template
@@ -59,6 +60,7 @@
     state: present
     provider: "{{ bigip_provider }}"
     validate_certs: no
+  delegate_to: localhost
 
 
 - name: Prepare the Telemetry Streaming declaration from the template

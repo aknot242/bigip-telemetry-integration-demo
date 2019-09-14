@@ -34,3 +34,4 @@
     provider: "{{ bigip_provider }}"
     state: present
     validate_certs: no
+  delegate_to: localhost
