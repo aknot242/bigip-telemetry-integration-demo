@@ -15,4 +15,4 @@ sudo pip install jmespath docker docker-compose
 # cat /home/ubuntu/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 
 # add internal IP
-sudo ifconfig eth1 10.1.10.11 netmask 255.255.255.0 broadcast 10.1.10.255
+sudo ifconfig eth1 10.1.20.11 netmask 255.255.255.0 broadcast 10.1.20.255
