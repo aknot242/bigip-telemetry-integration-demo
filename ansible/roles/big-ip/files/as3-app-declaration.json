@@ -1,4 +1,5 @@
 {
+    "$schema": "https://raw.githubusercontent.com/F5Networks/f5-appsvcs-extension/master/schema/latest/as3-schema.json",
     "class": "AS3",
     "action": "deploy",
     "persist": true,
@@ -54,7 +55,7 @@
                     "class": "Monitor",
                     "monitorType": "http",
                     "send": "GET / HTTP/1.0\r\n",
-                    "receive": "HTTP/1.1 302 Found",
+                    "receive": "HTTP/1.1 200 OK",
                     "interval": 5,
                     "timeout": 16
                 },
