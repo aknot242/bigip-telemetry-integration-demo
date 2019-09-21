@@ -1,6 +1,6 @@
 ---
 - name: Bootstrap the server
-  import_tasks: bootstrap_server.yml
+  import_tasks: bootstrap-server.yml
 
 - name: Check that docker is running and tear down existing containers in the docker-compose file
   import_tasks: docker-containers.yml
