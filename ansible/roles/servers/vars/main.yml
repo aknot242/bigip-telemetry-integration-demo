@@ -1,5 +1,4 @@
 #role variables
-become: yes
 
 grafana_port: "3030"
 grafana_base_url: "http://{{ inventory_hostname }}:{{grafana_port}}"

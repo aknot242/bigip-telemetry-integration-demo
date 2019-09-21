@@ -36,3 +36,7 @@
 - name: Install JmesPath Module for Python
   pip:
     name: jmespath
+
+- name: Create new network interface
+  import_role:
+    name: ansible-netplan
