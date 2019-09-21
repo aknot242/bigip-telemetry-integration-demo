@@ -18,7 +18,7 @@ netplan_config_file: /etc/netplan/udf-netplan.yaml
 netplan_renderer: networkd
 
 netplan_configuration:
-network:
+  network:
     version: 2
     ethernets:
     eth1:
