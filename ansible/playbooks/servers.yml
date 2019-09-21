@@ -2,5 +2,5 @@
 # file: servers.yml
 - hosts: servers
   roles:
+    - ansible-netplan
     - servers
-    
