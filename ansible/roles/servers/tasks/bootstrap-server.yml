@@ -36,15 +36,3 @@
 - name: Install JmesPath Module for Python
   pip:
     name: jmespath
-
-# Simple network configuration to add a single network interface.
-- name: Create new network interface
-  netplan_configuration:
-    network:
-      version: 2
-      ethernets:
-        eth1:
-          dhcp4: false
-          addresses:
-            - "{{ app_server_address }}/24"
-          gateway4: "{{ app_server_gateway }}"

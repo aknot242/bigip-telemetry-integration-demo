@@ -16,3 +16,13 @@ netplan_enabled: true
 netplan_config_file: /etc/netplan/udf-netplan.yaml
 # Ubuntu 18.04, for example, defaults to using networkd.
 netplan_renderer: networkd
+
+netplan_configuration:
+network:
+    version: 2
+    ethernets:
+    eth1:
+        dhcp4: false
+        addresses:
+        - "{{ app_server_address }}/24"
+        gateway4: "{{ app_server_gateway }}"

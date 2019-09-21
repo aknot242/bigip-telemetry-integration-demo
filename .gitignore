@@ -3,3 +3,4 @@ ansible/roles/as3-bluegreen/files/tmp
 *.sha256
 Pipfile
 *.pyc
+ansible/roles/ansible-netplan
