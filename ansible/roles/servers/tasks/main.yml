@@ -1,5 +1,8 @@
 ---
-- name: check that docker is running
+- name: Bootstrap the server
+  import_tasks: bootstrap_server.yml
+
+- name: Check that docker is running and tear down existing containers in the docker-compose file
   import_tasks: docker-containers.yml
 
 - name: Configure Elasticsearch
