@@ -37,20 +37,8 @@
   pip:
     name: jmespath
 
+# Simple network configuration to add a single network interface.
 - name: Create new network interface
-  roles:
-  - ansible-netplan
-
-- role: ansible-netplan
-  become: yes
-  # This role will do nothing unless netplan_enabled is true.
-  netplan_enabled: true
-  # The default is /etc/netplan/config.yaml.
-  netplan_config_file: /etc/netplan/udf-netplan.yaml
-  # Ubuntu 18.04, for example, defaults to using networkd.
-  netplan_renderer: networkd
-  # Simple network configuration to add a single network
-  # interface.
   netplan_configuration:
     network:
       version: 2
@@ -58,5 +46,5 @@
         eth1:
           dhcp4: false
           addresses:
-            - 10.1.20.11/24
-          gateway4: 10.1.20.1
+            - "{{ app_server_address }}/24"
+          gateway4: "{{ app_server_gateway }}"
