@@ -40,3 +40,4 @@
 - name: Create new network interface
   import_role:
     name: ansible-netplan
+  become: yes
