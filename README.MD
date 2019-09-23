@@ -20,5 +20,7 @@
 - The BIG-IP must already be configured with a management address, and must already have a strong password set if using BIG-IP v14+
 
 ## Usage
+- Run `git clone https://github.com/aknot242/bigip-telemetry-integration-demo.git`
+- `bigip-telemetry-integration-demo`
 - Run `./install-ubuntu-dependencies.sh`. This will install the linux dependencies required to run Docker and Ansible.
 - Run `./deploy.sh`. This will run the Ansible playbook to stand up the docker containers and configure them.

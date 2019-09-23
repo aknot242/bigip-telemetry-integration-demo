@@ -35,11 +35,12 @@
     "gnetId": null,
     "graphTooltip": 0,
     "id": null,
-    "iteration": 1567608845073,
+    "iteration": 1569094937281,
     "links": [],
     "panels": [
       {
         "cacheTimeout": null,
+        "datasource": "Graphite-Stats",
         "gridPos": {
           "h": 8,
           "w": 12,
@@ -75,12 +76,12 @@
           "showThresholdLabels": false,
           "showThresholdMarkers": true
         },
-        "pluginVersion": "6.3.2",
+        "pluginVersion": "6.3.5",
         "targets": [
           {
             "hide": false,
             "refId": "A",
-            "target": "stats.gauges.f5telemetry.f5vm010-westus2-cloudapp-azure-com.system.cpu"
+            "target": "stats.gauges.f5telemetry.*.system.cpu"
           }
         ],
         "timeFrom": null,
@@ -300,7 +301,7 @@
         "targets": [
           {
             "refId": "A",
-            "target": "stats.gauges.f5telemetry.f5vm010-westus2-cloudapp-azure-com.virtualServers.-Imperative_BIZ-A1-serviceMain.clientside-curConns"
+            "target": "stats.gauges.f5telemetry.*.virtualServers.-JuiceShop-Application_1-serviceMain.clientside-curConns"
           }
         ],
         "thresholds": [
@@ -316,7 +317,7 @@
         "timeFrom": null,
         "timeRegions": [],
         "timeShift": null,
-        "title": "Imperative VS Current Cons",
+        "title": "Juice Shop VS Current Conns",
         "tooltip": {
           "shared": true,
           "sort": 0,
@@ -639,11 +640,11 @@
           "showThresholdLabels": false,
           "showThresholdMarkers": true
         },
-        "pluginVersion": "6.3.2",
+        "pluginVersion": "6.3.5",
         "targets": [
           {
             "refId": "A",
-            "target": "stats.gauges.f5telemetry.f5vm010-westus2-cloudapp-azure-com.httpProfiles.-Common-http.5xxResp"
+            "target": "stats.gauges.f5telemetry.*.httpProfiles.-Common-http.5xxResp"
           }
         ],
         "timeFrom": null,
@@ -716,7 +717,7 @@
         "targets": [
           {
             "refId": "A",
-            "target": "perSecond(stats.gauges.f5telemetry.f5vm010-westus2-cloudapp-azure-com.httpProfiles.-Common-http.2xxResp)"
+            "target": "perSecond(stats.gauges.f5telemetry.*.httpProfiles.-Common-http.2xxResp)"
           }
         ],
         "thresholds": "",
@@ -799,7 +800,7 @@
         "targets": [
           {
             "refId": "A",
-            "target": "perSecond(stats.gauges.f5telemetry.f5vm010-westus2-cloudapp-azure-com.httpProfiles.-Common-http.3xxResp)"
+            "target": "perSecond(stats.gauges.f5telemetry.*.httpProfiles.-Common-http.3xxResp)"
           }
         ],
         "thresholds": "",
@@ -881,7 +882,7 @@
         "targets": [
           {
             "refId": "A",
-            "target": "perSecond(stats.gauges.f5telemetry.f5vm010-westus2-cloudapp-azure-com.httpProfiles.-Common-http.4xxResp)"
+            "target": "perSecond(stats.gauges.f5telemetry.*.httpProfiles.-Common-http.4xxResp)"
           }
         ],
         "thresholds": "",
@@ -945,7 +946,7 @@
           {
             "refCount": 0,
             "refId": "B",
-            "target": "aliasByNode(nonNegativeDerivative(stats.gauges.f5telemetry.f5vm010-westus2-cloudapp-azure-com.virtualServers.-Imperative_BIZ-A1-serviceMain.clientside-bitsOut), 3)",
+            "target": "aliasByNode(nonNegativeDerivative(stats.gauges.f5telemetry.*.virtualServers.-JuiceShop-Application_1-serviceMain.clientside-bitsOut), 3)",
             "textEditor": false
           }
         ],
@@ -1037,7 +1038,7 @@
           {
             "refCount": 0,
             "refId": "B",
-            "target": "aliasByNode(nonNegativeDerivative(stats.gauges.f5telemetry.f5vm010-westus2-cloudapp-azure-com.virtualServers.-Imperative_BIZ-A1-serviceMain.clientside-curConns), 3)",
+            "target": "aliasByNode(nonNegativeDerivative(stats.gauges.f5telemetry.*.virtualServers.-JuiceShop-Application_1-serviceMain.clientside-curConns), 3)",
             "textEditor": false
           }
         ],
@@ -1127,12 +1128,12 @@
           {
             "refCount": 0,
             "refId": "A",
-            "target": "aliasByMetric(stats.gauges.f5telemetry.f5vm010-westus2-cloudapp-azure-com.system.cpu)"
+            "target": "aliasByMetric(stats.gauges.f5telemetry.*.system.cpu)"
           },
           {
             "refCount": 0,
             "refId": "B",
-            "target": "aliasByMetric(stats.gauges.f5telemetry.f5vm010-westus2-cloudapp-azure-com.system.tmmCpu)"
+            "target": "aliasByMetric(stats.gauges.f5telemetry.*.system.tmmCpu)"
           }
         ],
         "thresholds": [],
@@ -1221,12 +1222,12 @@
           {
             "refCount": 0,
             "refId": "A",
-            "target": "aliasByMetric(stats.gauges.f5telemetry.f5vm010-westus2-cloudapp-azure-com.system.memory)"
+            "target": "aliasByMetric(stats.gauges.f5telemetry.*.system.memory)"
           },
           {
             "refCount": 0,
             "refId": "B",
-            "target": "aliasByMetric(stats.gauges.f5telemetry.f5vm010-westus2-cloudapp-azure-com.system.tmmMemory)"
+            "target": "aliasByMetric(stats.gauges.f5telemetry.*.system.tmmMemory)"
           }
         ],
         "thresholds": [],
@@ -1334,6 +1335,6 @@
     "timezone": "",
     "title": "BIG-IP System Dashboard",
     "uid": "984maaqiu",
-    "version": 43
+    "version": 2
   }
 }

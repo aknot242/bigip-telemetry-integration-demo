@@ -1,1 +1,1 @@
-ansible-playbook ansible/playbooks/site.yml
+sudo ansible-playbook ansible/playbooks/site.yml
