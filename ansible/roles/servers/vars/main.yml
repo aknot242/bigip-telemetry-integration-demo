@@ -16,7 +16,7 @@ netplan_config_file: /etc/netplan/udf-netplan.yaml
 # Ubuntu 18.04, for example, defaults to using networkd.
 netplan_renderer: networkd
 netplan_remove_existing: false
-
+netplan_apply: true
 netplan_configuration:
   network:
     version: 2
