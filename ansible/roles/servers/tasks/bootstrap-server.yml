@@ -41,3 +41,6 @@
   import_role:
     name: ansible-netplan
   become: yes
+
+- name: Force netplan apply (ansible-netplan does not seem to be doing it)
+  raw: sudo netplan apply
