@@ -4,6 +4,8 @@
 
 - name: Install required system packages
   apt: name={{ item }} state=latest update_cache=yes
+  environment:
+    DEBIAN_FRONTEND: noninteractive
   loop: [ 'apt-transport-https', 'ca-certificates', 'curl', 'python-pip', 'virtualenv', 'python-setuptools', 'rpm', 'python-jmespath']
 
 - name: Add Docker GPG apt Key
