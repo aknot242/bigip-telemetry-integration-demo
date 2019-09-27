@@ -3,6 +3,7 @@ bigip_provider:
   user: admin
   password: admin
 
+bigip_validate_certs: no
 bigip_domain: "us-west-2.compute.internal"
 bigip_hostname: "ip-{{ inventory_hostname | replace('.', '-')}}.{{ bigip_domain }}"
 bigip_ntp_server: "\"0.pool.ntp.org\", \"1.pool.ntp.org\""
@@ -14,5 +15,5 @@ bigip_internal_self_ip: "10.1.20.241/24"
 
 app_virtual_address: "10.1.10.20"
 
-# TODO: fix DRY problem. This varisble is repeated in the other host_vars file
+# TODO: fix DRY problem. This variable is repeated in the other host_vars file
 app_server_address: "10.1.20.11"
