@@ -76,7 +76,7 @@
 
 - name: Destroy an API token
   uri:
-    url: "https://{{ bigip_provider.server }}/mgmt/shared/authz/tokens/{{ auth['json']['token']['name'] }}"
+    url: "https://{{ bigip_provider.server }}/mgmt/shared/authz/tokens/{{ bigip_auth_response.json.token.token }}"
     method: DELETE
     headers:
       X-F5-Auth-Token: "{{bigip_auth_response.json.token.token}}"
