@@ -1,4 +1,7 @@
 ---
+- name: Suppress prompts on library install restarts
+  raw: echo '* libraries/restart-without-asking boolean true' | sudo debconf-set-selections
+
 - name: Install aptitude using apt
   apt: name=aptitude state=latest update_cache=yes force_apt_get=yes
 
