@@ -29,14 +29,6 @@
   pip:
     name: docker-compose
 
-- name: Install Docker Module for Python
-  pip:
-    name: docker
-
-- name: Install JmesPath Module for Python
-  pip:
-    name: jmespath
-
 - name: Create new network interface
   import_role:
     name: ansible-netplan

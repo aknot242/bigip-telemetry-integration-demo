@@ -5,5 +5,6 @@ echo '* libraries/restart-without-asking boolean true' | sudo debconf-set-select
 # install dependencies
 sudo apt update
 sudo apt-add-repository --yes --update ppa:ansible/ansible
-sudo apt install software-properties-common ansible -y
+sudo apt install software-properties-common ansible python-apt -y
+sudo pip install -q jmespath
 ansible-galaxy install -r ansible/requirements.yml
