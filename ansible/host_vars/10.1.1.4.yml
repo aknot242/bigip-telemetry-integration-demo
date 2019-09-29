@@ -3,7 +3,7 @@ bigip_provider:
   user: admin
   password: admin
 
-bigip_validate_certs: no
+bigip_validate_certs: false
 bigip_domain: "us-west-2.compute.internal"
 bigip_hostname: "ip-{{ inventory_hostname | replace('.', '-')}}.{{ bigip_domain }}"
 bigip_ntp_server: "\"0.pool.ntp.org\", \"1.pool.ntp.org\""

@@ -3,14 +3,10 @@
   service:
     name: docker
     state: started
-    enabled: yes
+    enabled: true
   register: docker_service_output
-  become: yes
-  ignore_errors: yes
-
-# - name: Start docker service
-#   shell: systemctl start docker
-#   become: yes
+  become: true
+  ignore_errors: true
 
 - name: Ensure that docker has started...
   shell: docker ps
@@ -36,4 +32,3 @@
   docker_compose:
     project_src: "{{ role_path }}/files/docker"
   register: output
-

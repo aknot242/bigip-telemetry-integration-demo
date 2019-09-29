@@ -2,10 +2,10 @@
 - name: Get latest DO and checksum file download urls
   uri:
     url: https://api.github.com/repos/F5Networks/f5-declarative-onboarding/releases/latest
-    return_content: yes
+    return_content: true
     status_code: 200
   register: do_github_releases
-  check_mode: no
+  check_mode: false
 - set_fact:
     # weird workaround below: https://github.com/ansible/ansible/issues/27299
     do_latest_release_url: "{{ do_github_releases.json | to_json | from_json | json_query('assets[?ends_with(name, `.rpm`)] | [0] | browser_download_url') }}"
@@ -15,8 +15,8 @@
   get_url:
     url: "{{ do_latest_release_checksum_url }}"
     dest: "{{ tmp_dir }}/{{ do_file_sha256 }}"
-    force: yes
-  check_mode: no
+    force: true
+  check_mode: false
 
 - name: Set DO checksum var
   set_fact:
@@ -27,8 +27,8 @@
     url: "{{ do_latest_release_url }}"
     dest: "{{ tmp_dir }}/{{ do_file }}"
     checksum: "sha256:{{ do_checksum }}"
-    force: yes
-  check_mode: no
+    force: true
+  check_mode: false
 
 
 - name: Add an iAppLX Package for Declarative Onboarding

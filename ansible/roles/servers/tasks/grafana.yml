@@ -3,7 +3,7 @@
   docker_compose:
     project_src: "{{ role_path }}/files/docker"
     services: grafana
-    restarted: yes
+    restarted: true
     state: present
   register: output
 
@@ -22,7 +22,7 @@
     user: "{{ grafana_username }}"
     password: "{{ grafana_password }}"
     method: GET
-    force_basic_auth: yes
+    force_basic_auth: true
     status_code: 200
   register: grafana_datasources
 
@@ -36,7 +36,7 @@
     user: "{{ grafana_username }}"
     password: "{{ grafana_password }}"
     method: DELETE
-    force_basic_auth: yes
+    force_basic_auth: true
     status_code: 200
   loop: "{{ grafana_datasources_list }}"
 
@@ -47,7 +47,7 @@
     password: "{{ grafana_password }}"
     method: POST
     body: "{{ lookup('file', item) }}"
-    force_basic_auth: yes
+    force_basic_auth: true
     status_code: 200
     body_format: json
   with_fileglob:
@@ -59,7 +59,7 @@
     user: "{{ grafana_username }}"
     password: "{{ grafana_password }}"
     method: GET
-    force_basic_auth: yes
+    force_basic_auth: true
     status_code: 200
   register: grafana_alert_notifications
 
@@ -73,7 +73,7 @@
     user: "{{ grafana_username }}"
     password: "{{ grafana_password }}"
     method: DELETE
-    force_basic_auth: yes
+    force_basic_auth: true
     status_code: 200
   loop: "{{ grafana_alert_notifications_list }}"
 
@@ -84,35 +84,11 @@
     password: "{{ grafana_password }}"
     method: POST
     body: "{{ lookup('file', item) }}"
-    force_basic_auth: yes
+    force_basic_auth: true
     status_code: 200
     body_format: json
   with_fileglob:
     - "files/grafana/alert-notifications/*.json"
-
-# - name: Get all existing dashboards
-#   uri:
-#     url: "{{ grafana_base_url }}/api/dashboards"
-#     user: "{{ grafana_username }}"
-#     password: "{{ grafana_password }}"
-#     method: GET
-#     force_basic_auth: yes
-#     status_code: 200
-#   register: grafana_dashboards
-
-# - name: Create dashboards list from json
-#   set_fact:
-#     grafana_dashboards_list: "{{ grafana_dashboards.json | json_query('[*].uid') }}"
-      
-# - name: Delete all existing dashboards
-#   uri:
-#     url: "{{ grafana_base_url }}/api/dashboards/uid/{{ item }}"
-#     user: "{{ grafana_username }}"
-#     password: "{{ grafana_password }}"
-#     method: DELETE
-#     force_basic_auth: yes
-#     status_code: 200
-#   loop: "{{ grafana_dashboards_list }}"
 
 - name: Create grafana alert notifications
   uri:
@@ -121,7 +97,7 @@
     password: "{{ grafana_password }}"
     method: POST
     body: "{{ lookup('file', item) }}"
-    force_basic_auth: yes
+    force_basic_auth: true
     status_code: 200
     body_format: json
   with_fileglob:
@@ -134,6 +110,6 @@
     password: "{{ grafana_password }}"
     method: PUT
     body: '{"homeDashboardId":1}'
-    force_basic_auth: yes
+    force_basic_auth: true
     status_code: 200
     body_format: json
