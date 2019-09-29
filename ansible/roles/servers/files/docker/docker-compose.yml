@@ -14,7 +14,7 @@ services:
     image: "graphiteapp/graphite-statsd"
     restart: unless-stopped
     ports:
-      - "80:80"
+      - "3400:80"
       - "2003-2004:2003-2004"
       - "2023-2024:2023-2024"
       - "8125:8125/udp"
@@ -39,6 +39,8 @@ services:
   bigip_customipi_feed:
     image: "aknot242/bigip-custom-ipi-feed"
     restart: unless-stopped
+    depends_on:
+      - redis
     ports:
       - "3200:3200"
     environment:
