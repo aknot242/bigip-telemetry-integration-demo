@@ -1,5 +1,5 @@
 ---
-- name: "Wait for grafana to come up"
+- name: Wait for grafana to come up before configuring ElasticSearch
   uri:
     url: "{{ elasticsearch_base_url }}/"
     status_code: 200
@@ -8,7 +8,7 @@
   retries: 20
   delay: 5
 
-- name: Check if index exists
+- name: Check if ElasticSearch index exists
   uri:
     url: "{{ elasticsearch_base_url }}/{{ elasticsearch_index }}"
     method: GET
@@ -21,7 +21,7 @@
     var: index_check
     verbosity: 2
 
-- name: Index settings
+- name: Set ElasticSearch Index settings
   uri:
     url: "{{ elasticsearch_base_url }}/{{ elasticsearch_index }}"
     method: PUT
@@ -30,7 +30,7 @@
     body_format: json
   when: index_check.status == 404
 
-- name: Mappings settings
+- name: ElasticSearch Mappings settings
   uri:
     url: "{{ elasticsearch_base_url }}/{{ elasticsearch_index }}/_mapping"
     method: PUT
