@@ -90,7 +90,7 @@
   with_fileglob:
     - "files/grafana/alert-notifications/*.json"
 
-- name: Create grafana alert notifications
+- name: Create grafana dashboard
   uri:
     url: "{{ grafana_base_url }}/api/dashboards/db"
     user: "{{ grafana_username }}"
